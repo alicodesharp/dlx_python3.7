@@ -1,11 +1,11 @@
 import sys
 from functools import reduce
-from .ksubsetlex import all, rank
-from .combfuncs import createLookup
-from .DLX_Class import DLX
+import ksubsetlex
+import combfuncs
+import DLX_Class
 
 
-class DesignDLX(DLX):
+class DesignDLX(DLX_Class.DLX):
 
     def __init__(self, t, v, k, fixings=True):
         self.t = t
@@ -17,7 +17,7 @@ class DesignDLX(DLX):
         olarak return yerine yield kullanılmış, yani generator oluşturulmuş, bunun sebebi ise memory den yer kazanmak.
         """
 
-        columns = list(all(v, t))
+        columns = list(ksubsetlex.all(v, t))
 
         """
         Belirli bir alt kümeyi, demeti veya permütasyonu depolamanın birden çok yolu vardır, ancak daha da önemlisi, bu 
@@ -37,7 +37,7 @@ class DesignDLX(DLX):
         T ler ise dönen k elemanlı alt kümeler.
         t = 2 , bizim BIBDler için.
         """
-        rows = [[rank(v, T) for T in all(createLookup(S), t)] for S in all(v, k)]
+        rows = [[ksubsetlex.rank(v, T) for T in ksubsetlex.all(combfuncs.createLookup(S), t)] for S in ksubsetlex.all(v, k)]
 
         """
         Aşağıdaki inherite ettiğimiz asıl DLX - Dancing Link, X algoritmasıdır. Başlangıç parametreleri
@@ -59,7 +59,7 @@ class DesignDLX(DLX):
         appendRows(self, rows, rowNames=None)
         
         """
-        DLX.__init__(self, [(c, DLX.PRIMARY) for c in columns])
+        DLX_Class.DLX.__init__(self, [(c, DLX_Class.DLX.PRIMARY) for c in columns])
 
         self.rowsByLexOrder = self.appendRows(rows)
 
@@ -70,14 +70,14 @@ class DesignDLX(DLX):
             while (i + 1) * k - i * t + (i - 1) < v:
                 block[t - 1:] = range(i * k - (i - 1) * t + (i - 1), (i + 1) * k - i * t + i)
 
-                r = rank(v, block)
+                r = ksubsetlex.rank(v, block)
                 self.fixedBlocks.append(r)
                 self.useRow(self.rowsByLexOrder[r])
 
                 i += 1
 
             block[t - 2:] = [i * k - (i - 1) * t + (i - 1) for i in range(k - t + 2)]
-            r = rank(v, block)
+            r = ksubsetlex.rank(v, block)
             self.fixedBlocks.append(r)
             self.useRow(self.rowsByLexOrder[r])
 

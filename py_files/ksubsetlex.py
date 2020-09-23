@@ -1,5 +1,4 @@
-from functools import reduce
-from .combfuncs import binom
+import combfuncs
 
 
 def rank(B, K):
@@ -8,9 +7,9 @@ def rank(B, K):
     v = (B if type(B) == int else len(B[0]))
     block = (K if type(B) == int else [B[1][i] for i in K])
     k = len(block)
-    r = binom(v, k)
+    r = combfuncs.binom(v, k)
     for i in range(k):
-        r -= binom(v - block[i] - 1, k - i)
+        r -= combfuncs.binom(v - block[i] - 1, k - i)
     return r - 1
 
 
@@ -20,17 +19,17 @@ def unrank(B, k, rk):
     v = (B if type(B) == int else len(B[0]))
 
     K = [0] * k
-    vi = binom(v, k)
+    vi = combfuncs.binom(v, k)
     j = v
     ki = k
     s = rk + 1
     for i in range(k - 1):
-        while s > vi - binom(j, ki):
+        while s > vi - combfuncs.binom(j, ki):
             j -= 1
         K[i] = v - j - 1
-        s += binom(j + 1, ki) - vi
+        s += combfuncs.binom(j + 1, ki) - vi
         ki -= 1
-        vi = binom(j, ki)
+        vi = combfuncs.binom(j, ki)
     K[k - 1] = v + s - vi - 1
 
     return K if type(B) == int else [B[0][i] for i in K]
