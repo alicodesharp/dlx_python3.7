@@ -16,4 +16,6 @@ print(design.L)
 print(design.N)
 print(design.S)
 print(type(design.solve()))
-print(design.solve().__next__())  # Dönen generator nesnesinde iter yapabiliriz.
+print(design.solve().__next__())
+
+# Dönen generator nesnesinde iter yapabiliriz.

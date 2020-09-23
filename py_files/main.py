@@ -43,7 +43,7 @@ class DesignDLX(DLX_Class.DLX):
         Aşağıdaki inherite ettiğimiz asıl DLX - Dancing Link, X algoritmasıdır. Başlangıç parametreleri
         olarak k-subset leri alır. __init__(self, columns, rows=None, rowNames=None) şeklinde initializator'u var.
         
-        ****Class içerisinde tanımlanan methodlar****
+        .****Class içerisinde tanımlanan methodlar****.
         
         _cover(column)
         _uncover(column)
