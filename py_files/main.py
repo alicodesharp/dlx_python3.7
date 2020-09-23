@@ -90,6 +90,8 @@ class DesignDLX(DLX_Class.DLX):
 
         Örneğin f(x,y) = x+y iken [1,2,3] listesi devreye girer ise,
         f(f(1,2),3) = f(3,3) = 6 sonucunu alırız.
+
+        Sonuç olarak da dönen değerleri kümede tutup, onu liste halinde döndürüyoruz.
         """
         return list(set(reduce(lambda x, y: x + y, self.getRowList('{}'.format(i for i in solution)), [])))
 
